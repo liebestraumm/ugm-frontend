@@ -1,6 +1,6 @@
 import { Platform, SafeAreaView, StyleSheet, StatusBar } from "react-native";
-import SignIn from "@views/SignIn";
-import SignUp from "@views/SignUp";
+import SignIn from "app/screens/SignIn";
+import SignUp from "app/screens/SignUp";
 
 export default function App() {
   return (
