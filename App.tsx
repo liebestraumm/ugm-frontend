@@ -1,12 +1,18 @@
 import { Platform, SafeAreaView, StyleSheet, StatusBar } from "react-native";
 import SignIn from "app/screens/SignIn";
 import SignUp from "app/screens/SignUp";
+import Navigator from "app/navigator";
+import FlashMessage from "react-native-flash-message";
+import { Provider } from "react-redux";
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <SignUp />
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={styles.container}>
+        <Navigator />
+        <FlashMessage position="top" />
+      </SafeAreaView>
+    </Provider>
   );
 }
 
