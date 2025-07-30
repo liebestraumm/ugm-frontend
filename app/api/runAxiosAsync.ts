@@ -1,15 +1,16 @@
 import { AxiosResponse, AxiosError } from "axios";
 import { showMessage } from "react-native-flash-message";
 
-type SuccessResponse<T> = {
-  data: T;
-  error: null;
-};
 
-type ErrorResponse<E> = {
-  data: null;
-  error: E;
-};
+// type SuccessResponse<T> = {
+//   data: T;
+//   error: null;
+// };
+
+// type ErrorResponse<E> = {
+//   data: null;
+//   error: E;
+// };
 
 export const runAxiosAsync = async <T>(
   promise: Promise<AxiosResponse<T>>

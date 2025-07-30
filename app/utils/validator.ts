@@ -44,6 +44,11 @@ export const newUserSchema = yup.object({
   ...nameAndEmailValidation,
 });
 
-export const signInSchema = yup.object({
+export const signUpSchema = yup.object({
   ...nameAndEmailValidation,
+});
+
+export const signInSchema = yup.object({
+  email: yup.string().email("Invalid email!").required("Email is missing"),
+  password: yup.string().required("Password is missing"),
 });

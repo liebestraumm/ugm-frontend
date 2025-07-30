@@ -6,14 +6,17 @@ import { StyleSheet, Pressable, Text } from "react-native";
 interface Props {
   title: string;
   active?: boolean;
+  disabled?: boolean;
   onPress?(): void;
 }
 
-const AppButton: FC<Props> = ({ title, active = true, onPress }) => {
+const AppButton: FC<Props> = ({ title, active = true, disabled = false, onPress }) => {
+  const isActive = active && !disabled;
+  
   return (
     <Pressable
-      onPress={onPress}
-      style={[styles.button, active ? styles.btnActive : styles.btnDeActive]}
+      onPress={isActive ? onPress : undefined}
+      style={[styles.button, isActive ? styles.btnActive : styles.btnDeActive]}
     >
       <Text style={styles.title}>{title}</Text>
     </Pressable>
