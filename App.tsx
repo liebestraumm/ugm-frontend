@@ -9,7 +9,7 @@ export default function App() {
     <Provider store={store}>
       <SafeAreaView style={styles.container}>
         <Navigator />
-        <FlashMessage position="top" />
+        <FlashMessage position="top" duration={3500} />
       </SafeAreaView>
     </Provider>
   );

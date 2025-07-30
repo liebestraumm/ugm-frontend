@@ -37,7 +37,7 @@ export const newUserSchema = yup.object({
     .string()
     .required("Password is missing")
     .min(8, "Password should be at least 8 chars long!")
-    .matches(passwordRegex, "Password is too simple."),
+    .matches(passwordRegex, "Password should contain at least one uppercase letter, one lowercase letter, one number, and one special character."),
 });
 
 export const signInSchema = yup.object({

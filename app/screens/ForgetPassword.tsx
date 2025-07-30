@@ -44,11 +44,12 @@ const ForgetPassword: FC<Props> = (props) => {
     const res = await runAxiosAsync<{ message: string }>(
       client.post("/auth/forget-password", data)
     );
-
-    if (res?.message) {
+    if (!res?.success) {
       dispatch(updateAuthState({ profile: null, pending: false }));
-      showMessage({ message: res.message, type: "success" });
+      return;
     }
+    dispatch(updateAuthState({ profile: null, pending: false }));
+    showMessage({ message: res.data.message, type: "success" });
   };
 
   const { isSubmitting, submit } = useFormSubmit<ForgetPasswordFormData>({

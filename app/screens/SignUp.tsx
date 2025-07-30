@@ -51,10 +51,13 @@ const SignUp: FC<Props> = (props) => {
       client.post("/auth/sign-up", data)
     );
 
-    if (res?.message) {
-      showMessage({ message: res.message, type: "success" });
-      signIn(data);
+    if (!res?.success) {
+      dispatch(updateAuthState({ profile: null, pending: false }));
+      return;
     }
+    dispatch(updateAuthState({ profile: null, pending: false }));
+    showMessage({ message: res.data.message, type: "success" });
+    signIn(data);
   };
 
   const { isSubmitting, submit } = useFormSubmit<SignUpFormData>({
