@@ -8,11 +8,16 @@ import { FC } from "react";
 import { View, StyleSheet } from "react-native";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AuthStackParamList } from "@navigators/AuthNavigator";
-import { newUserSchema, signUpSchema, yupValidate } from "@utils/validator";
-import { showMessage } from "react-native-flash-message";
+import useFormSubmit from "@hooks/useFormSubmit";
+import { newUserSchema } from "@utils/validator";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import SignIn from "./SignIn";
+import { runAxiosAsync } from "app/api/runAxiosAsync";
+import client from "app/api/client";
+import { showMessage } from "react-native-flash-message";
+import useAuth from "@hooks/useAuth";
+import { updateAuthState } from "app/store/auth";
+import { useDispatch } from "react-redux";
 
 interface SignUpFormData {
   name: string;
@@ -24,11 +29,13 @@ interface Props {}
 
 const SignUp: FC<Props> = (props) => {
   const { navigate } = useNavigation<NavigationProp<AuthStackParamList>>();
+  const dispatch = useDispatch();
+  const { signIn } = useAuth();
 
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<SignUpFormData>({
     resolver: yupResolver(newUserSchema),
     defaultValues: {
@@ -38,12 +45,23 @@ const SignUp: FC<Props> = (props) => {
     },
   });
 
-  const onSubmit = async (data: SignUpFormData) => {
-    const { values, error } = await yupValidate(signUpSchema, data);
+  const handleSignUp = async (data: SignUpFormData) => {
+    dispatch(updateAuthState({ profile: null, pending: true }));
+    const res = await runAxiosAsync<{ message: string }>(
+      client.post("/auth/sign-up", data)
+    );
 
-    if (error) return showMessage({ message: error, type: "danger" });
-    if (values) SignIn(values);
+    if (res?.message) {
+      showMessage({ message: res.message, type: "success" });
+      signIn(data);
+    }
   };
+
+  const { isSubmitting, submit } = useFormSubmit<SignUpFormData>({
+    schema: newUserSchema,
+    onSuccess: handleSignUp,
+    successMessage: "Account created successfully!",
+  });
 
   return (
     <CustomKeyAvoidingView>
@@ -96,16 +114,16 @@ const SignUp: FC<Props> = (props) => {
             )}
           />
 
-          <AppButton 
-            title={isSubmitting ? "Signing up..." : "Sign Up"} 
-            onPress={handleSubmit(onSubmit)}
+          <AppButton
+            title={isSubmitting ? "Signing up..." : "Sign Up"}
+            onPress={handleSubmit(submit)}
             disabled={isSubmitting}
           />
 
           <FormDivider />
 
-          <FormNavigator 
-            leftTitle="Forget Password" 
+          <FormNavigator
+            leftTitle="Forget Password"
             rightTitle="Sign In"
             onRightPress={() => navigate("SignIn")}
           />

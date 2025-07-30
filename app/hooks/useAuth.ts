@@ -5,16 +5,18 @@ import { getAuthState, updateAuthState } from "app/store/auth";
 import { useDispatch, useSelector } from "react-redux";
 
 export interface SignInRes {
-  profile: {
-    id: string;
-    email: string;
-    name: string;
-    verified: boolean;
-    avatar?: string;
-  };
-  tokens: {
-    refresh: string;
-    access: string;
+  data: {
+    profile: {
+      id: string;
+      email: string;
+      name: string;
+      verified: boolean;
+      avatar?: string;
+    };
+    tokens: {
+      refresh: string;
+      access: string;
+    };
   };
 }
 
@@ -35,14 +37,14 @@ const useAuth = () => {
 
     if (res) {
       // store the tokens
-      await AsyncStorage.setItem("access-token", res.tokens.access);
-      await AsyncStorage.setItem("refresh-token", res.tokens.refresh);
-      dispatch(updateAuthState({ profile: res.profile, pending: false }));
+      const { tokens, profile } = res.data;
+      await AsyncStorage.setItem("access-token", tokens.access);
+      await AsyncStorage.setItem("refresh-token", tokens.refresh);
+      dispatch(updateAuthState({ profile: { data: profile }, pending: false }));
     } else {
       dispatch(updateAuthState({ profile: null, pending: false }));
     }
   };
-
   const loggedIn = authState.profile ? true : false;
 
   return { signIn, authState, loggedIn };

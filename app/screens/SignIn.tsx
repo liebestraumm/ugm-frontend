@@ -9,8 +9,8 @@ import { View, StyleSheet } from "react-native";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AuthStackParamList } from "@navigators/AuthNavigator";
 import useAuth from "@hooks/useAuth";
-import { signInSchema, yupValidate } from "@utils/validator";
-import { showMessage } from "react-native-flash-message";
+import useFormSubmit from "@hooks/useFormSubmit";
+import { signInSchema } from "@utils/validator";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -28,7 +28,7 @@ const SignIn: FC<Props> = (props) => {
   const {
     control,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
   } = useForm<SignInFormData>({
     resolver: yupResolver(signInSchema),
     defaultValues: {
@@ -37,12 +37,10 @@ const SignIn: FC<Props> = (props) => {
     },
   });
 
-  const onSubmit = async (data: SignInFormData) => {
-    const { values, error } = await yupValidate(signInSchema, data);
-
-    if (error) return showMessage({ message: error, type: "danger" });
-    if (values) signIn(values);
-  };
+  const { isSubmitting, submit } = useFormSubmit<SignInFormData>({
+    schema: signInSchema,
+    onSuccess: signIn,
+  });
 
   return (
     <CustomKeyAvoidingView>
@@ -83,7 +81,7 @@ const SignIn: FC<Props> = (props) => {
 
           <AppButton 
             title={isSubmitting ? "Signing in..." : "Sign in"} 
-            onPress={handleSubmit(onSubmit)}
+            onPress={handleSubmit(submit)}
             disabled={isSubmitting}
           />
 
