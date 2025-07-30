@@ -1,8 +1,8 @@
 import AppButton from "@components/ui/AppButton";
 import CustomKeyAvoidingView from "@components/ui/CustomKeyAvoidingView";
-import FormDivider from "@components/form/FormDivider";
-import FormInput from "@components/form/FormInput";
-import FormNavigator from "@components/form/FormNavigator";
+import FormDivider from "@components/forms/FormDivider";
+import FormInput from "@components/forms/FormInput";
+import FormNavigator from "@components/forms/FormNavigator";
 import WelcomeHeader from "@components/ui/WelcomeHeader";
 import { FC } from "react";
 import { View, StyleSheet } from "react-native";

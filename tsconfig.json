@@ -1,13 +1,32 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
+    "allowJs": false,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "jsx": "react-native",
+    "module": "ES2020",
+    "moduleResolution": "node",
     "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noUnusedLocals": true,
+    "sourceMap": true,
+    "target": "esnext",
+    "lib": ["esnext", "dom"],
+    "skipLibCheck": true,
+    "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@views/*": ["app/screens/*"],
+      "@screens/*": ["app/screens/*"],
       "@components/*": ["app/components/*"],
+      "@constants/*": ["app/constants/*"],
       "@utils/*": ["app/utils/*"],
-      "@ui/*": ["app/ui/*"]
+      "@ui/*": ["app/ui/*"],
+      "@assets/*": ["app/assets/*"],
+      "@hooks/*": ["app/hooks/*"],
+      "@navigators/*": ["app/navigators/*"]
     }
   }
 }

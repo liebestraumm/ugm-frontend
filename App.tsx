@@ -1,9 +1,8 @@
 import { Platform, SafeAreaView, StyleSheet, StatusBar } from "react-native";
-import SignIn from "app/screens/SignIn";
-import SignUp from "app/screens/SignUp";
-import Navigator from "app/navigator";
+import Navigator from "@navigators/index";
 import FlashMessage from "react-native-flash-message";
 import { Provider } from "react-redux";
+import store from "app/store";
 
 export default function App() {
   return (

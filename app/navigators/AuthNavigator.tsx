@@ -1,9 +1,9 @@
 import { FC } from "react";
 import { StyleSheet } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import SignIn from "@views/SignIn";
-import SignUp from "@views/SignUp";
-import ForgetPassword from "@views/ForgetPassword";
+import SignIn from "@screens/SignIn";
+import SignUp from "@screens/SignUp";
+import ForgetPassword from "@screens/ForgetPassword";
 
 export type AuthStackParamList = {
   SignIn: undefined;
@@ -13,9 +13,7 @@ export type AuthStackParamList = {
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
 
-interface Props {}
-
-const AuthNavigator: FC<Props> = (props) => {
+const AuthNavigator = () => {
   return (
     <Stack.Navigator
       initialRouteName="SignIn"
