@@ -46,6 +46,7 @@ const ForgetPassword: FC<Props> = (props) => {
     );
 
     if (res?.message) {
+      dispatch(updateAuthState({ profile: null, pending: false }));
       showMessage({ message: res.message, type: "success" });
     }
   };
