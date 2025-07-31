@@ -1,12 +1,12 @@
-import AvatarView from "@ui/AvatarView";
+import AvatarView from "@components/ui/AvatarView";
 import colors from "@utils/colors";
 import { formatDate } from "@utils/date";
 import { formatPrice } from "@utils/helper";
 import size from "@utils/size";
 import { FC } from "react";
 import { View, StyleSheet, Text, ScrollView } from "react-native";
-import ImageSlider from "./ImageSlider";
-import { Product } from "app/store/listings";
+import ImageSlider from "@components/sliders/ImageSlider";
+import { Product } from "@store/listings";
 
 interface Props {
   product: Product;

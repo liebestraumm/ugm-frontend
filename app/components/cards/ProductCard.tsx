@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Pressable, Image } from "react-native";
 import { formatPrice } from "@utils/helper";
 import colors from "@utils/colors";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import { LatestProduct } from "@components/LatestProductList";
+import { LatestProduct } from "@components/lists/LatestProductList";
 
 interface Props {
   product: LatestProduct;

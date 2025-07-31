@@ -1,7 +1,7 @@
 import colors from "@utils/colors";
 import { FC } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import ProductGridView from "./ProductGridView";
+import ProductGridView from "@components/grid/ProductGridView";
 
 export type LatestProduct = {
   id: string;
