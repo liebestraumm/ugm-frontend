@@ -4,6 +4,7 @@ import { runAxiosAsync } from "app/api/runAxiosAsync";
 import { getAuthState, updateAuthState } from "app/store/auth";
 import { useDispatch, useSelector } from "react-redux";
 import useClient from "./useClient";
+import socket from "app/socket";
 
 export interface SignInRes {
   profile: {
@@ -60,6 +61,9 @@ const useAuth = () => {
       await asyncStorage.remove(Keys.REFRESH_TOKEN);
       await asyncStorage.remove(Keys.AUTH_TOKEN);
       dispatch(updateAuthState({ profile: null, pending: false }));
+      
+      // Disconnect socket when user signs out
+      socket.disconnect();
     }
   };
   const loggedIn = authState.profile ? true : false;

@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "react-native-app-frontend",
-    "slug": "react-native-app-frontend",
+    "name": "ugm-frontend",
+    "slug": "ugm-frontend",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

@@ -43,13 +43,13 @@ const Profile: FC<Props> = (props) => {
   const isNameChanged =
     profile?.name !== userName && userName.trim().length >= 3;
 
-//   const onMessagePress = () => {
-//     navigate("Chats");
-//   };
+  const onMessagePress = () => {
+    navigate("Chats");
+  };
 
-//   const onListingPress = () => {
-//     navigate("Listings");
-//   };
+  const onListingPress = () => {
+    navigate("Listings");
+  };
 
   const fetchProfile = async () => {
     setRefreshing(true);
@@ -143,8 +143,8 @@ const Profile: FC<Props> = (props) => {
         style={styles.marginBottom}
         antIconName="message1"
         title="Messages"
-        // onPress={onMessagePress}
-        // active={totalUnreadMessages > 0}
+        onPress={onMessagePress}
+        active={totalUnreadMessages > 0}
       />
       <ProfileOptionListItem
         style={styles.marginBottom}

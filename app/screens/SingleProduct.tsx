@@ -5,8 +5,8 @@ import BackButton from "@components/buttons/BackButton";
 import useAuth from "app/hooks/useAuth";
 import { ProfileNavigatorParamList } from "@navigators/ProfileNavigator";
 import { FC, useEffect, useState } from "react";
-import { View, StyleSheet, Text, Alert, Pressable } from "react-native";
-import { Feather, AntDesign } from "@expo/vector-icons";
+import { View, StyleSheet, Text, Alert } from "react-native";
+import { Feather } from "@expo/vector-icons";
 import colors from "@utils/colors";
 import OptionButton from "@components/buttons/OptionButton";
 import OptionModal from "@components/modals/OptionModal";
@@ -16,7 +16,7 @@ import { showMessage } from "react-native-flash-message";
 import LoadingAnimation from "@components/ui/LoadingAnimation";
 import { useDispatch } from "react-redux";
 import { Product, deleteItem } from "app/store/listings";
-import ChatIcon from "@components/ui/ChatIcon";
+import ChatIcon from "@components/chat/ChatIcon";
 
 type Props = NativeStackScreenProps<ProfileNavigatorParamList, "SingleProduct">;
 
@@ -52,9 +52,9 @@ const SingleProduct: FC<Props> = ({ route, navigation }) => {
       authClient.delete("/product/" + id)
     );
     setBusy(false);
-    if (res?.message) {
+    if (res?.data?.message) {
       dispatch(deleteItem(id));
-      showMessage({ message: res.message, type: "success" });
+      showMessage({ message: res.data.message, type: "success" });
       navigation.navigate("Listings");
     }
   };
@@ -75,7 +75,7 @@ const SingleProduct: FC<Props> = ({ route, navigation }) => {
       authClient.get("/product/detail/" + id)
     );
     if (res) {
-      setProductInfo(res.product);
+      setProductInfo(res.data.product);
     }
   };
 
@@ -89,20 +89,23 @@ const SingleProduct: FC<Props> = ({ route, navigation }) => {
     setFetchingChatId(false);
     if (res) {
       navigation.navigate("ChatWindow", {
-        conversationId: res.conversationId,
+        conversationId: res.data.conversationId,
         peerProfile: productInfo.seller,
       });
     }
   };
 
   useEffect(() => {
+    setBusy(true);
     if (id) fetchProductInfo(id);
 
     if (product) setProductInfo(product);
+    setBusy(false);
   }, [id, product]);
 
   return (
     <>
+      <LoadingAnimation visible={busy} />
       <AppHeader
         backButton={<BackButton />}
         right={

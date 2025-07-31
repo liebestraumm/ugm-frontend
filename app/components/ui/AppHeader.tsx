@@ -1,7 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
 import size from "@utils/size";
 import { FC } from "react";
-import { View, StyleSheet, Pressable } from "react-native";
+import { View, StyleSheet, Pressable, Platform } from "react-native";
 
 interface Props {
   backButton?: JSX.Element | null;
@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: size.padding,
+    paddingLeft: size.padding,
+    paddingTop: Platform.OS === "ios" ? size.padding : 0,
   },
 });
 

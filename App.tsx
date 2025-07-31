@@ -8,6 +8,7 @@ export default function App() {
   return (
     <Provider store={store}>
       <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="dark-content" />
         <Navigator />
         <FlashMessage position="top" duration={3500} />
       </SafeAreaView>

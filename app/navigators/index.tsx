@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 import colors from "@utils/colors";
 import AuthNavigator from "./AuthNavigator";
-import { Profile, updateAuthState } from "app/store/auth";
+import { updateAuthState } from "app/store/auth";
 import { runAxiosAsync } from "app/api/runAxiosAsync";
 import client from "app/api/client";
 import { useDispatch } from "react-redux";
@@ -10,6 +10,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingAnimation from "@components/ui/LoadingAnimation";
 import useAuth from "@hooks/useAuth";
 import TabNavigator from "./TabNavigator";
+import { handleSocketConnection } from "app/socket";
 
 const MyTheme = {
   ...DefaultTheme,
@@ -60,6 +61,15 @@ const Navigator = () => {
   useEffect(() => {
     fetchAuthState();
   }, []); // Only run once on mount, not when loggedIn changes
+
+  // Handle socket connection when user is logged in
+  useEffect(() => {
+    console.log("Navigator useEffect - loggedIn:", loggedIn, "profile:", !!authState.profile);
+    if (loggedIn && authState.profile) {
+      console.log("Attempting to connect socket...");
+      handleSocketConnection(authState.profile, dispatch);
+    }
+  }, [loggedIn, authState.profile, dispatch]);
 
   console.log("Current authState:", authState);
   console.log("Current loggedIn:", loggedIn);
