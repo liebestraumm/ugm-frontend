@@ -48,3 +48,18 @@ export const signInSchema = yup.object({
 export const forgetPasswordSchema = yup.object({
   email: yup.string().email("Invalid email!").required("Email is missing"),
 });
+
+export const newProductSchema = yup.object({
+  name: yup.string().required("Product name is missing!"),
+  description: yup.string().required("Product description is missing!"),
+  category: yup.string().required("Product category is missing!"),
+  price: yup
+    .string()
+    .transform((value) => {
+      if (isNaN(+value)) return "";
+
+      return value;
+    })
+    .required("Product price is missing!"),
+  purchasingDate: yup.date().required("Purchasing date is missing!"),
+});

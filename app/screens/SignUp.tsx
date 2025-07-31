@@ -1,4 +1,4 @@
-import AppButton from "@components/ui/AppButton";
+import AppButton from "@components/buttons/AppButton";
 import CustomKeyAvoidingView from "@components/ui/CustomKeyAvoidingView";
 import FormDivider from "@components/forms/FormDivider";
 import FormInput from "@components/forms/FormInput";

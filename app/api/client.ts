@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const baseURL = "http://192.168.1.4:8000/api";
+export const baseURL = "https://ugm-backend.vercel.app/api";
 
 const client = axios.create({ baseURL });
 

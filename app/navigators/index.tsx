@@ -9,7 +9,7 @@ import { useDispatch } from "react-redux";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import LoadingAnimation from "@components/ui/LoadingAnimation";
 import useAuth from "@hooks/useAuth";
-import AppNavigator from "./AppNavigator";
+import TabNavigator from "./TabNavigator";
 
 const MyTheme = {
   ...DefaultTheme,
@@ -27,7 +27,7 @@ const Navigator = () => {
     const token = await AsyncStorage.getItem("access-token");
     if (token) {
       dispatch(updateAuthState({ pending: true, profile: null }));
-      const res = await runAxiosAsync<{ data: Profile }>(
+      const res = await runAxiosAsync<Profile>(
         client.get("/auth/profile", {
           headers: {
             Authorization: "Bearer " + token,
@@ -52,7 +52,7 @@ const Navigator = () => {
   return (
     <NavigationContainer theme={MyTheme}>
       <LoadingAnimation visible={authState.pending} />
-      {!loggedIn ? <AuthNavigator /> : <AppNavigator />}
+      {!loggedIn ? <AuthNavigator /> : <TabNavigator />}
     </NavigationContainer>
   );
 };
