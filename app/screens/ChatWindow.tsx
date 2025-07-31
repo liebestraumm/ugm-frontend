@@ -90,15 +90,6 @@ const ChatWindow: FC<Props> = ({ route }) => {
       to: peerProfile.id,
     };
 
-    // this will update our store and also update the UI
-    dispatch(
-      updateConversation({
-        conversationId,
-        chat: { ...newMessage.message, viewed: false },
-        peerProfile,
-      })
-    );
-
     // sending message to our api
     console.log("Emitting chat:new event:", newMessage);
     console.log("Socket connected:", socket.connected);
@@ -106,8 +97,15 @@ const ChatWindow: FC<Props> = ({ route }) => {
     if (socket.connected) {
       socket.emit("chat:new", newMessage);
     } else {
-      console.log("Socket not connected - message will not be sent to server");
-      // TODO: Implement fallback mechanism (e.g., store message locally and retry later)
+      console.log("Socket not connected - adding message locally as fallback");
+      // Fallback: add message locally when socket is not connected
+      dispatch(
+        updateConversation({
+          conversationId,
+          chat: { ...newMessage.message, viewed: false },
+          peerProfile,
+        })
+      );
     }
   };
 
