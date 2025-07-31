@@ -26,7 +26,8 @@
       "@ui/*": ["app/ui/*"],
       "@assets/*": ["app/assets/*"],
       "@hooks/*": ["app/hooks/*"],
-      "@navigators/*": ["app/navigators/*"]
+      "@navigators/*": ["app/navigators/*"],
+      "@store/*": ["app/store/*"]
     }
   }
 }

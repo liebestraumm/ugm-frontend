@@ -19,6 +19,16 @@ const MyTheme = {
   },
 };
 
+export type ProfileRes = {
+  profile: {
+    id: string;
+    name: string;
+    email: string;
+    verified: boolean;
+    avatar?: string;
+  };
+};
+
 const Navigator = () => {
   const dispatch = useDispatch();
   const { loggedIn, authState } = useAuth();
@@ -27,7 +37,7 @@ const Navigator = () => {
     const token = await AsyncStorage.getItem("access-token");
     if (token) {
       dispatch(updateAuthState({ pending: true, profile: null }));
-      const res = await runAxiosAsync<Profile>(
+      const res = await runAxiosAsync<ProfileRes>(
         client.get("/auth/profile", {
           headers: {
             Authorization: "Bearer " + token,
@@ -35,7 +45,12 @@ const Navigator = () => {
         })
       );
       if (res) {
-        dispatch(updateAuthState({ pending: false, profile: res.data }));
+        dispatch(
+          updateAuthState({
+            pending: false,
+            profile: { ...res.data.profile, accessToken: token },
+          })
+        );
       } else {
         dispatch(updateAuthState({ pending: false, profile: null }));
       }
