@@ -71,12 +71,14 @@ const SingleProduct: FC<Props> = ({ route, navigation }) => {
   };
 
   const fetchProductInfo = async (id: string) => {
+    setBusy(true);
     const res = await runAxiosAsync<{ product: Product }>(
       authClient.get("/product/detail/" + id)
     );
     if (res) {
       setProductInfo(res.data.product);
     }
+    setBusy(false);
   };
 
   const onChatBtnPress = async () => {
@@ -96,11 +98,9 @@ const SingleProduct: FC<Props> = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    setBusy(true);
     if (id) fetchProductInfo(id);
 
     if (product) setProductInfo(product);
-    setBusy(false);
   }, [id, product]);
 
   return (

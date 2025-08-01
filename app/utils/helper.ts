@@ -4,7 +4,7 @@ import { showMessage } from "react-native-flash-message";
 export const formatPrice = (amount: number) => {
   return new Intl.NumberFormat("en-US", {
     style: "currency",
-    currency: "INR",
+    currency: "AUD",
   }).format(amount);
 };
 
